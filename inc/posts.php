@@ -1,5 +1,7 @@
 <?php
 
+
+
 function get_all_posts(){
    return [
         [
@@ -20,20 +22,37 @@ function get_all_posts(){
 };?>
 
 <?php function render_posts(){ 
-    $all_posts=get_all_posts(); ?>
+
+    global $host, $user, $password, $database,$port, $db; 
+    
+    
+    
+    
+    ?>
     <div class="posts">
 		
-			<?php if (isset($_GET['view'])&& ctype_digit($_GET['view'])): 
+			<?php 
+            
+            
+            if (isset($_GET['view'])&& ctype_digit($_GET['view'])):
+            $id = (int)$_GET['view'];  
+            $stmt = $db->prepare("SELECT * FROM posts WHERE id= ?" );
+            $stmt->execute([$id]); 
+            $all_posts=$stmt->fetchAll();    
 						foreach( $all_posts as $post):
-							if ($_GET['view']==$post['id']):?>
+							if ($id===(int)$post['id']):?>
                                 <article class="post">
-								    <h2 class='post-title'><?=$post['title'] ; ?></h2>
-								    <p class ='post-content'><?=$post['content']; ?></p> 
+								    <h2 class='post-title'><?=htmlspecialchars($post['title']) ; ?></h2>
+								    <p class ='post-content'><?=htmlspecialchars($post['content']); ?></p> 
                                 </article>
 		    				<?php endif; 
 						endforeach ; 
 
-				else: foreach($all_posts as $article):?>
+				else:
+                    $stmt = $db->prepare("SELECT * FROM posts"); 
+                    $stmt->execute(); 
+                    $all_posts=$stmt->fetchAll(); 
+                    foreach($all_posts as $article):?>
                     <article class="post" >
 					<a href="?view=<?php echo $article['id'] ; ?>"><h2 class='post-title'><?=$article['title'] ; ?></h2></a>
 					<p class='post-content'><?=$article ['excerpt']; ?></p> 
