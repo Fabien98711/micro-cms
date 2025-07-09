@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../init.php';?>
-<div>vous êtes ici</div>
-<?php echo $_POST['post_id']; ?>
+
 
 
 

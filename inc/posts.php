@@ -61,6 +61,11 @@ function get_all_posts(){
                         <input type="hidden" name="post_id" value="<?php echo $article['id']; ?>">
                         <input type="submit" name="delete-post" value="supprimer" style="red">
                     </form> 
+                    <form action="inc/edit-posts.php" method="post" onsubmit="return confirm ('Voulez-vous vraiment modifier cet article?'); ">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+                        <input type="hidden" name="post_id" value="<?php echo $article['id']; ?>">
+                        <input type="submit" name="modify-post" value="modifier" style="red">
+                    </form> 
                     </article>
                     
 		         	<?php endforeach ; 

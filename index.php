@@ -11,6 +11,8 @@
     <div class="success">✅ El post ha sido creado</div>
 <?php elseif (isset($_GET['deleted'])): ?>
     <div class="success">🗑️ El post ha sido eliminado</div>
+<?php elseif (isset($_GET['modified'])): ?>
+    <div class="success"> El post ha sido modificado</div>
 <?php endif; ?>
 
 <?php $posts= render_posts(); 	?>
