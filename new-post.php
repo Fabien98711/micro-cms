@@ -1,5 +1,5 @@
 <?php require_once __DIR__.'/init.php'; ?>
-<?php require_once __DIR__.'/templates/header.php' ?>
+
 
 
 <?php 
@@ -24,12 +24,17 @@ if(isset($_POST['submit-new-post'])){
         $stmt->execute([$title, $excerpt, $content, $published_on]);
         $new_id=$db->lastInsertID(); 
         $title=$excerpt=$content=' '; 
+        header("Location: index.php?created=1"); 
+        exit;
+        
     }catch(PDOException $e){
         echo "<p style='color:red;'>Erreur lors de l'insertion : " . $e->getMessage() . "</p>";
     }
      
 }
 }
+require_once __DIR__.'/templates/header.php';
+
 
 
 ?>

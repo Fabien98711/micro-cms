@@ -23,7 +23,7 @@ function get_all_posts(){
 
 <?php function render_posts(){ 
 
-    global $host, $user, $password, $database,$port, $db; 
+    global $host, $user, $password, $database,$port, $db, $csrf_token; 
     
     
     
@@ -55,8 +55,14 @@ function get_all_posts(){
                     foreach($all_posts as $article):?>
                     <article class="post" >
 					<a href="?view=<?php echo $article['id'] ; ?>"><h2 class='post-title'><?=$article['title'] ; ?></h2></a>
-					<p class='post-content'><?=$article ['excerpt']; ?></p> 
+					<p class='post-content'><?=$article ['excerpt']; ?></p>
+                    <form action="inc/delete-posts.php" method="post" onsubmit="return confirm ('Voulez-vous vraiment supprimer cet article?'); ">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+                        <input type="hidden" name="post_id" value="<?php echo $article['id']; ?>">
+                        <input type="submit" name="delete-post" value="supprimer" style="red">
+                    </form> 
                     </article>
+                    
 		         	<?php endforeach ; 
 			endif;  ?>
 		
